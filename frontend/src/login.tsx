@@ -1,6 +1,9 @@
 import { Link } from "react-router";
 import { Button } from "./components/ui/button";
 import { useState } from "react";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "./firebase_config";
+
 
 export function Login() {
 	const [health, setHealth] = useState("");
@@ -10,7 +13,29 @@ export function Login() {
 		const res = await fetch(url);
 		setHealth(await res.json());
 	}
+
+	const handleGoogleSignIn = async (e) => {
+		const provider = await new GoogleAuthProvider();
+		return signInWithPopup(auth, provider);
+	}
+
 	return (
+		<>
+			{/* Login Container */}
+			<div className="flex flex-col gap-4 max-w-md mx-auto w-full p-4">
+				<div>
+					{/* Header */}
+					<Link to="/"> Go to home! </Link>
+					Hello world, this is login!
+				</div>
+				{/* Login Form */}
+				<div className="flex flex-col gap-3">
+					<input type="text" placeholder="Username" className="max-w-xs" />
+					<input type="password" placeholder="Password" className="max-w-xs" />
+					<button className="max-w-xs">Login</button>
+					<button onClick={handleGoogleSignIn} className="max-w-xs">Sign in with Google</button>
+				</div>
+			</div>
 		<div>
 			<Button onClick={() => getHealth()}>Get Health</Button>
 			<Link to="/">Go to home!</Link>
@@ -18,5 +43,7 @@ export function Login() {
 			<p>Health: {JSON.stringify(health)}</p>
 			MORE STUFF: {JSON.stringify(import.meta.env)}
 		</div>
+		</>
+
 	);
 }
