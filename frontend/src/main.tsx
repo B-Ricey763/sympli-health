@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router";
 import { Routes } from "react-router";
 import { Route } from "react-router";
 import { Login } from "./login.tsx";
+import { Chat } from "./chat.tsx";
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
@@ -13,6 +14,7 @@ createRoot(document.getElementById("root")!).render(
 			<Routes>
 				<Route path="/" element={<App />} />
 				<Route path="/login" element={<Login />} />
+				<Route path="/chat" element={<Chat />} />
 			</Routes>
 		</BrowserRouter>
 	</StrictMode>,
