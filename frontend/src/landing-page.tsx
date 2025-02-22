@@ -14,7 +14,7 @@ export function LandingPage() {
                         <p className="text-2xl font-['PT_Sans_Narrow'] drop-shadow-[0_5px_5px_rgba(120,112,255,0.15)]">Your health, simplified</p>
                     </div>
                     
-                    <div className="flex flex-col gap-8 mt-12 max-w-4xl">
+                    <div className="flex flex-col gap-8 mt-12 max-w-6xl">
                         <div className="text-center">
                             <h2 className="text-2xl font-['PT_Sans_Narrow'] text-[#7870FF] mb-2">Tell Your Health Story</h2>
                             <p className="text-lg">Share your symptoms and health experiences through natural conversations in our secure platform.</p>
