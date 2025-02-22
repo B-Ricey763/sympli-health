@@ -9,6 +9,7 @@ import { Login } from "./login.tsx";
 import { Chat } from "./chat.tsx";
 import { LandingPage } from "./landing-page.tsx";
 import { NavBar } from "./nav-bar.tsx";
+import { Dashboard } from "./dashboard.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -19,7 +20,6 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/chat" element={<Chat />} />
         <Route path="/landing" element={<LandingPage />} />
         <Route path="/dashboard" element={<LandingPage />} />
-        <Route path="/navbar" element={<NavBar />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
