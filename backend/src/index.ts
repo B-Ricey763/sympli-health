@@ -1,4 +1,7 @@
 import { Request, Response } from "@google-cloud/functions-framework";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 export async function index(req: Request, res: Response) {
 	// CORS handling
@@ -14,7 +17,7 @@ export async function index(req: Request, res: Response) {
 	try {
 		// Health check - keep this in main function for monitoring
 		if (req.path === "/health") {
-			res.json({ status: "hello" });
+			res.json({ env: process.env.TWILIO_SID });
 			return;
 		}
 
