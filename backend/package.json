@@ -8,13 +8,15 @@
 		"prestart": "npm run build",
 		"dev": "nodemon",
 		"gcp-build": "npm run build",
-		"deploy": "ts-node deploy.ts"
+		"deploy": "ts-node deploy.ts",
+		"compilePrompt": "ts-node compile-prompt.ts"
 	},
 	"author": "",
 	"license": "ISC",
 	"description": "",
 	"dependencies": {
 		"@google-cloud/functions-framework": "^3.4.5",
+		"@google/generative-ai": "^0.22.0",
 		"dotenv": "^16.4.7",
 		"twilio": "^5.4.5"
 	},

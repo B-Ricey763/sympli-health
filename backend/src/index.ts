@@ -1,5 +1,6 @@
 import { Request, Response } from "@google-cloud/functions-framework";
 import * as dotenv from "dotenv";
+import { HandleMessage } from "./handlers/messaging";
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ export async function index(req: Request, res: Response) {
 	try {
 		// Health check - keep this in main function for monitoring
 		if (req.path === "/health") {
-			res.json({ env: process.env.TWILIO_SID });
+			res.json({ status: "ok", message: "you are good to go!" });
 			return;
 		}
 
@@ -25,7 +26,9 @@ export async function index(req: Request, res: Response) {
 		const user = await authenticateRequest(req);
 
 		// Route to appropriate handler
-		const handlers = {};
+		const handlers = {
+			"/send-msg": HandleMessage,
+		};
 
 		const handler = handlers[req.path];
 		if (handler) {
