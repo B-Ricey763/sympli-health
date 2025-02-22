@@ -1,8 +1,8 @@
 import { Request, Response } from "@google-cloud/functions-framework";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import "dotenv/config";
+import prompt from "../prompts";
 
-console.log(process.env);
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const model = genAI.getGenerativeModel({
@@ -15,7 +15,7 @@ const generationConfig = {
 	topP: 0.95,
 	topK: 40,
 	maxOutputTokens: 8192,
-	responseMimeType: "text/plain",
+	responseMimeType: "application/json",
 };
 
 interface MessageRequest {
@@ -36,7 +36,7 @@ export async function HandleMessage(req: Request, res: Response) {
 		history: [
 			{
 				role: "user",
-				parts: [{ text: "respond to this in a cool way bro" }],
+				parts: [{ text: prompt }],
 			},
 		],
 	});
