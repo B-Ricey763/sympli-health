@@ -1,11 +1,22 @@
 {
-  "name": "sympli-health-backend",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "description": ""
+	"name": "sympli-health-backend",
+	"version": "1.0.0",
+	"main": "dist/index.js",
+	"scripts": {
+		"build": "tsc",
+		"start": "functions-framework --target=index",
+		"prestart": "npm run build",
+		"dev": "nodemon",
+		"gcp-build": "npm run build"
+	},
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"dependencies": {
+		"@google-cloud/functions-framework": "^3.4.5"
+	},
+	"devDependencies": {
+		"nodemon": "^3.1.9",
+		"typescript": "^5.7.3"
+	}
 }
