@@ -7,15 +7,20 @@ import { Routes } from "react-router";
 import { Route } from "react-router";
 import { Login } from "./login.tsx";
 import { Chat } from "./chat.tsx";
+import { LandingPage } from "./landing-page.tsx";
+import { NavBar } from "./nav-bar.tsx";
 
 createRoot(document.getElementById("root")!).render(
-	<StrictMode>
-		<BrowserRouter>
-			<Routes>
-				<Route path="/" element={<App />} />
-				<Route path="/login" element={<Login />} />
-				<Route path="/chat" element={<Chat />} />
-			</Routes>
-		</BrowserRouter>
-	</StrictMode>,
+  <StrictMode>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/chat" element={<Chat />} />
+        <Route path="/landing" element={<LandingPage />} />
+        <Route path="/dashboard" element={<LandingPage />} />
+        <Route path="/navbar" element={<NavBar />} />
+      </Routes>
+    </BrowserRouter>
+  </StrictMode>
 );
