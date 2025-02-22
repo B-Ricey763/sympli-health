@@ -3,6 +3,7 @@ import { Button } from "./components/ui/button";
 import { useState } from "react";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "./firebase_config";
+import { NavBar } from "./nav-bar";
 
 
 export function Login() {
@@ -22,11 +23,11 @@ export function Login() {
 	return (
 		<>
 			{/* Login Container */}
-			<div className="flex flex-col gap-4 max-w-md mx-auto w-full p-4">
-				<div>
+            <NavBar />
+			<div className="flex flex-col gap-4 max-w-md mx-auto w-full p-8">
+				<div className="text-left">
 					{/* Header */}
-					<Link to="/"> Go to home! </Link>
-					Hello world, this is login!
+					<h1 className="font-bold text-2xl">Welcome!</h1>
 				</div>
 				{/* Login Form */}
 				<div className="flex flex-col gap-3">
