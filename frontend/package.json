@@ -4,11 +4,12 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"dev": "vite",
+		"dev": "vite --mode development",
+		"dev:prod": "vite --mode production",
 		"build": "tsc -b && vite build",
 		"lint": "eslint .",
-		"preview": "vite preview",
-		"deploy": "firebase deploy --only hosting"
+		"preview": "vite preview --mode production",
+		"deploy": "vite build --mode production && firebase deploy --only hosting"
 	},
 	"dependencies": {
 		"@radix-ui/react-slot": "^1.1.2",
