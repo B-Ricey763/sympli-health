@@ -18,7 +18,7 @@ export async function index(req: Request, res: Response) {
 	try {
 		// Health check - keep this in main function for monitoring
 		if (req.path === "/health") {
-			res.json({ env: process.env.TWILIO_SID });
+			res.json({ status: "ok", message: "you are good to go!" });
 			return;
 		}
 
