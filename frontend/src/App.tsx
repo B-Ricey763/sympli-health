@@ -1,24 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 function App() {
-	const [count, setCount] = useState(0);
+	const navigate = useNavigate();
 
-	async function getHealth() {
-		const res = await fetch(
-			"https://index-router-57685090875.us-east1.run.app/health",
-		);
-		console.log(await res.json());
-	}
+	useEffect(() => {
+		navigate("/landing");
+	});
 
-	return (
-		<>
-			<Button asChild>
-				<Link to="/login">Login</Link>
-			</Button>
-		</>
-	);
+	return <div>Loading...</div>;
 }
 
 export default App;
