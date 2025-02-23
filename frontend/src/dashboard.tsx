@@ -71,7 +71,7 @@ export function Dashboard() {
 	return (
 		<ProtectedRoute>
 			<NavBar />
-			<div className="mx-auto w-full py-10 text-center md:w-3/4">
+			<div className="mx-auto w-full py-10 text-center md:w-2/3">
 				{exists ? (
 					<SymptomChart symptoms={symptoms} />
 				) : (

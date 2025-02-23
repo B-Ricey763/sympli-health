@@ -154,9 +154,9 @@ export function Chat() {
 			<div className="container mx-auto px-4 pb-6 pt-6 text-center font-['PT_Sans_Narrow'] text-3xl font-bold">
 				Chat with Sympli
 			</div>
-			<Card className="mx-auto my-4 flex h-[700px] w-full max-w-2xl flex-col shadow-xl shadow-[#7870FF]/50">
+			<Card className="mx-auto my-4 flex h-[700px] py-5 w-full max-w-2xl flex-col shadow-xl shadow-[#7870FF]/50">
 				<CardContent className="flex h-full flex-col p-4">
-					<ScrollArea className="flex-1 pr-4">
+					<ScrollArea className="flex-1 pr-4 overflow-y-auto">
 						<div className="space-y-4">
 							{messages.map((message) => (
 								<ChatMessage
