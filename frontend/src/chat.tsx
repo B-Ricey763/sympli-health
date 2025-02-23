@@ -102,8 +102,13 @@ export function Chat() {
 		// Add welcome message when component mounts
 		const welcomeMessage = {
 			id: "welcome",
-			content:
-				"Welcome to Sympli 👋! If this is an emergency, please exit the app and call 911. If this is not an emergency please tell me about the symptoms you are experiencing today.",
+			content:(
+                <>
+                    Welcome to Sympli 👋! If this is an emergency, please exit the app and call 911.
+                    <br /> <br />
+                    If this is not an emergency, please tell me about the symptoms you are experiencing today.
+                </>
+            ),
 			timestamp: new Date().toISOString(),
 			sender: botUser,
 		};
