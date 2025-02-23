@@ -35,6 +35,13 @@ export function NavBar() {
 		return location.pathname === path ? "border-b-2 border-[#7870FF] pb-1" : "";
 	};
 
+	const getUserInitials = (user) => {
+        if (!user) return "";
+        const nameParts = user.displayName?.split(" ") || [];
+        const initials = nameParts.map((part) => part[0]).join("");
+        return initials || user.email[0];
+    };
+
 	const onLogout = async () => {
 		try {
 			await auth.signOut();
@@ -89,16 +96,17 @@ export function NavBar() {
 							<DropdownMenuTrigger asChild>
 								<Button
 									variant="ghost"
-									className="relative h-8 w-8 rounded-full"
-								>
-									<Avatar className="h-8 w-8">
-										<AvatarImage src="/placeholder-avatar.jpg" alt="User" />
-										<AvatarFallback>U</AvatarFallback>
-									</Avatar>
+									className="relative h-8 w-8 rounded-full">
+										<Avatar className="h-8 w-8">
+											<AvatarImage src={user?.photoURL || ""} alt={user?.displayName || "User"} />
+											<AvatarFallback>{getUserInitials(user)}</AvatarFallback>
+										</Avatar>
 								</Button>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent align="end">
-								<DropdownMenuItem onClick={onLogout}>
+								<DropdownMenuItem 
+									onClick={onLogout}
+									className="hover:bg-[#7870FF]/10 focus:bg-[#7870FF]/10">
 									<LogOut className="mr-2 h-4 w-4" />
 									<span>Log out</span>
 								</DropdownMenuItem>
@@ -106,7 +114,7 @@ export function NavBar() {
 						</DropdownMenu>
 					) : (
 						<Link to="/login">
-							<Button variant="default">Login</Button>
+							<Button className="bg-[#7870FF] hover:bg-[#7870FF]/90 shadow-xl shadow-[#7870FF]/60 text-xl px-12 py-6 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-[#7870FF]/70">Login</Button>
 						</Link>
 					)}
 				</div>
@@ -140,7 +148,7 @@ export function NavBar() {
 								</Button>
 							) : (
 								<Link to="/login">
-									<Button className="w-full" variant="default">
+									<Button className="bg-[#7870FF] hover:bg-[#7870FF]/90 shadow-xl shadow-[#7870FF]/60 text-xl px-12 py-6 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-[#7870FF]/70 w-full" variant="default">
 										Login
 									</Button>
 								</Link>
