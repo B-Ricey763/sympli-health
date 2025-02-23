@@ -9,11 +9,11 @@ export function LandingPage() {
             <NavBar />
             <main className="container mx-auto px-6">
                 <div className="flex flex-col items-center pt-24 gap-2">
-                    <div className="text-center drop-shadow-2xl">
-                        <h1 className="text-7xl font-bold font-['PT_Sans_Narrow'] drop-shadow-[0_10px_10px_rgba(120,112,255,0.25)]">Sympli</h1>
-                        <p className="text-2xl font-['PT_Sans_Narrow'] drop-shadow-[0_5px_5px_rgba(120,112,255,0.15)]">Your health, simplified</p>
+                    <div className="text-center">
+                        <h1 className="text-7xl font-bold font-['PT_Sans_Narrow']">Sympli</h1>
+                        <p className="text-2xl font-['PT_Sans_Narrow']">Your health, simplified</p>
                     </div>
-                    
+
                     <div className="flex flex-col gap-8 mt-12 max-w-6xl">
                         <div className="text-center">
                             <h2 className="text-2xl font-['PT_Sans_Narrow'] text-[#7870FF] mb-2">Tell Your Health Story</h2>
