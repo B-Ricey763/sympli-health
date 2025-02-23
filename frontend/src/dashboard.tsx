@@ -71,7 +71,7 @@ export function Dashboard() {
 	return (
 		<ProtectedRoute>
 			<NavBar />
-			<div className="mx-auto w-full py-10 text-center md:w-3/4">
+			<div className="mx-auto w-full py-10 text-center md:w-2/3">
 				{exists ? (
 					<SymptomChart symptoms={symptoms} />
 				) : (
@@ -80,7 +80,11 @@ export function Dashboard() {
 							<LoaderIcon className="animate-spin" />
 						</div>
 
-						<p className="py-4">If this is loading for too long, </p>
+                        <div className="max-w-xxl mx-auto">
+                            <p className="py-4">
+                            Click below to begin logging your symptoms and see your health insights dashboard.
+                            </p>
+                        </div>
 						<Link to="/login">
 							<Button className="rounded-xl bg-[#7870FF] px-12 py-6 text-xl shadow-xl shadow-[#7870FF]/60 transition-all duration-300 hover:scale-105 hover:bg-[#7870FF]/90 hover:shadow-2xl hover:shadow-[#7870FF]/70">
 								Start Chatting

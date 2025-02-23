@@ -17,6 +17,7 @@ import { onAuthStateChanged } from "firebase/auth";
 export function NavBar() {
 	const location = useLocation();
 	const isLoggedIn = auth.currentUser !== null;
+    const isLoginPage = location.pathname === "/login";
 	const navigate = useNavigate();
 	const [user, setUser] = useState(null);
 
@@ -86,7 +87,7 @@ export function NavBar() {
                     <h1 className="font-['PT_Sans_Narrow'] text-2xl hover:text-[#7870FF] transition-colors">
                         Sympli
                     </h1>
-</Link>
+                </Link>
 				</div>
 
 				{/* Desktop Navigation */}
@@ -121,7 +122,7 @@ export function NavBar() {
 								</DropdownMenuItem>
 							</DropdownMenuContent>
 						</DropdownMenu>
-					) : (
+					) : !isLoginPage && ( // Show Login button only if not on login page
 						<Link to="/login">
 							<Button className="rounded-xl bg-[#7870FF] px-12 py-6 text-xl shadow-xl shadow-[#7870FF]/60 transition-all duration-300 hover:scale-105 hover:bg-[#7870FF]/90 hover:shadow-2xl hover:shadow-[#7870FF]/70">
 								Login
