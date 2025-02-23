@@ -5,6 +5,10 @@ import { useEffect, useState } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "./firebase_config";
 import { getDocumentFromFirestore } from "./database";
+import { Link } from "react-router";
+import { Button } from "./components/ui/button.tsx";
+import { LoaderIcon } from "lucide-react"
+
 
 interface SymptomEntry {
 	name: string;
@@ -67,9 +71,17 @@ export function Dashboard() {
 
 	return (
 		<ProtectedRoute>
-			<div className="min-h-screen">
-				<NavBar />
-				{exists ? <SymptomChart symptoms={symptoms} /> : "Loading..."}
+            <NavBar />
+			<div className="min-h-screen text-center py-10">
+				{exists ? <SymptomChart symptoms={symptoms} /> :
+                    <div className="flex justify-center items-center">
+                        <LoaderIcon className="animate-spin" />
+                    </div>
+                }
+                <p className="py-4">If this is loading for too long, </p>
+                <Link to="/login">
+                        <Button className="bg-[#7870FF] hover:bg-[#7870FF]/90 shadow-xl shadow-[#7870FF]/60 text-xl px-12 py-6 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-[#7870FF]/70">Start Chatting</Button>
+                </Link>
 			</div>
 		</ProtectedRoute>
 	);
