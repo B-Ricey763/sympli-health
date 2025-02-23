@@ -99,7 +99,7 @@ export function SymptomChart({ symptoms }) {
 		<Card>
 			<CardHeader>
 				<CardTitle>Symptoms over Time</CardTitle>
-				<CardDescription>2025</CardDescription>
+				<CardDescription>{`January - December ${new Date().getFullYear()}`}</CardDescription>
 			</CardHeader>
 			<CardContent>
 				<ChartContainer config={chartConfig}>
