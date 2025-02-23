@@ -8,6 +8,9 @@ import "dotenv/config";
 import prompt from "../prompts";
 import { DecodedIdToken } from "firebase-admin/auth";
 import { db } from "..";
+import { firestore } from "firebase-admin";
+
+type SymptomMap = Record<string, Symptom[]>;
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
@@ -46,6 +49,7 @@ const generationConfig: GenerationConfig = {
 							type: SchemaType.STRING,
 						},
 					},
+					required: ["name", "datetime", "relative_time"],
 				},
 			},
 		},
@@ -61,7 +65,8 @@ interface MessageRequest {
 
 interface Symptom {
 	name: string;
-	onset: string;
+	datetime: string;
+	relative_time: string;
 }
 
 interface ChatResponse {
@@ -102,7 +107,10 @@ export async function HandleMessage(
 	) as ChatResponse;
 
 	if (chatResponse.symptoms.length > 0) {
-		console.log(chatResponse.symptoms);
+	}
+
+	if (chatResponse.symptoms.length > 0) {
+		writeSymptomsToDb(user, chatResponse.symptoms);
 	}
 
 	res.status(200).json({
@@ -112,9 +120,37 @@ export async function HandleMessage(
 }
 
 // TODO: test db stuff
-async function writeSymptomsToDb(user: DecodedIdToken) {
-	const result = await db.collection("user-symptoms").add({
-		name: "test doc",
+async function writeSymptomsToDb(user: DecodedIdToken, symptoms: Symptom[]) {
+	const docs = await db
+		.collection("user-symptoms")
+		.where("userId", "==", user.uid)
+		.get();
+
+	if (docs.empty) {
+		const map = {};
+		updateSymptomsMap(map, symptoms);
+
+		const result = await db.collection("user-symptoms").add({
+			userId: user.uid,
+			symptoms: map,
+		});
+		return result;
+	}
+
+	const doc = docs.docs[0];
+	const currentSymptoms = doc.data().symptoms as SymptomMap;
+	updateSymptomsMap(currentSymptoms, symptoms);
+	return await db.collection("user-symptoms").doc(doc.id).update({
+		symptoms: currentSymptoms,
 	});
-	return result;
+}
+
+function updateSymptomsMap(sMap: SymptomMap, newSymptoms: Symptom[]) {
+	for (const s of newSymptoms) {
+		if (s.name in sMap) {
+			sMap[s.name].push(s);
+		} else {
+			sMap[s.name] = [s];
+		}
+	}
 }
