@@ -1,7 +1,7 @@
 "use client";
 
 import { LoaderIcon, TrendingUp } from "lucide-react";
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 
 import {
 	Card,
@@ -107,6 +107,8 @@ export function SymptomChart({ symptoms }) {
 						accessibilityLayer
 						data={extractDates(symptoms)}
 						margin={{
+                            top: 10,
+                            bottom: 10,
 							left: 12,
 							right: 12,
 						}}
@@ -115,10 +117,23 @@ export function SymptomChart({ symptoms }) {
 						<XAxis
 							dataKey="month"
 							tickLine={false}
-							axisLine={false}
+							axisLine={true}
 							tickMargin={8}
 							tickFormatter={(value) => value.slice(0, 3)}
+                            label={{
+                                value: "Month",
+                                position: "bottom",
+                                offset: 0
+                            }}
 						/>
+                        <YAxis
+                            label={{
+                                value: "Number of Occurrences",
+                                angle: -90,
+                                position: "insideLeft",
+                                offset: -5
+                            }}
+                        />
 						<ChartTooltip cursor={false} content={<ChartTooltipContent />} />
 						{Object.keys(symptoms).map((symptom, index) => (
 							<Line
