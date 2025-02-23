@@ -1,5 +1,4 @@
-import { Link } from "react-router";
-import { Button } from "./components/ui/button";
+import { Component } from "./dashboard-graph.tsx";
 import { NavBar } from "./nav-bar";
 
 export function Dashboard() {
@@ -7,9 +6,9 @@ export function Dashboard() {
         <>
         <div className="min-h-screen">
             <NavBar />
+            <Component />
             <main className="container mx-auto px-4">
             {
-
             }
             </main>
         </div>
