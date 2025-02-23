@@ -82,7 +82,11 @@ export function NavBar() {
 			<div className="flex items-center justify-between px-4 py-3 md:px-10">
 				{/* Logo */}
 				<div className="font-bold">
-					<h1 className="font-['PT_Sans_Narrow'] text-2xl">Sympli</h1>
+                <Link to="/landing">
+                    <h1 className="font-['PT_Sans_Narrow'] text-2xl hover:text-[#7870FF] transition-colors">
+                        Sympli
+                    </h1>
+</Link>
 				</div>
 
 				{/* Desktop Navigation */}
