@@ -80,9 +80,8 @@ const ChatMessage = ({ message, isUser }) => {
 			<div className={`${isUser ? "items-end" : ""} flex flex-col`}>
 				<div
 					className={`${
-						isUser ? "bg-primary text-primary-foreground" : "bg-muted"
-					} max-w-md rounded-lg px-4
-        py-2`}
+						isUser ? "bg-[#7870FF] text-white" : "bg-muted"
+					} max-w-md rounded-lg px-4 py-2`}
 				>
 					{message.content}
 				</div>
@@ -98,6 +97,17 @@ export function Chat() {
 	const [messages, setMessages] = useState([]);
 	const [inputValue, setInputValue] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
+
+	useEffect(() => {
+		// Add welcome message when component mounts
+		const welcomeMessage = {
+			id: "welcome",
+			content: "Hi there! 👋 How can I help you today?",
+			timestamp: new Date().toISOString(),
+			sender: botUser,
+		};
+		setMessages([welcomeMessage]);
+	}, []);
 
 	const handleSendMessage = async (e) => {
 		e.preventDefault();
@@ -134,8 +144,9 @@ export function Chat() {
 
 	return (
 		<ProtectedRoute>
-			<NavBar />
-			<Card className="mx-auto my-4 flex h-[700px] w-full max-w-2xl flex-col">
+=			<NavBar />
+			<div className="container mx-auto pt-6 pb-6 px-4 text-3xl font-bold font-['PT_Sans_Narrow'] text-center">Chat with Sympli</div>
+			<Card className="mx-auto my-4 flex h-[700px] w-full max-w-2xl flex-col shadow-xl shadow-[#7870FF]/50">
 				<CardContent className="flex h-full flex-col p-4">
 					<ScrollArea className="flex-1 pr-4">
 						<div className="space-y-4">
@@ -157,7 +168,11 @@ export function Chat() {
 							disabled={isLoading}
 							className="flex-1"
 						/>
-						<Button type="submit" disabled={isLoading}>
+						<Button 
+							type="submit" 
+							disabled={isLoading}
+							className="bg-[#7870FF] hover:bg-[#7870FF]/90 shadow-xl shadow-[#7870FF]/60 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-[#7870FF]/70"
+							>
 							{isLoading ? "Sending..." : "Send"}
 						</Button>
 					</form>
