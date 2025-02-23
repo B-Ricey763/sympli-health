@@ -99,7 +99,7 @@ export function SymptomChart({ symptoms }) {
 		<Card>
 			<CardHeader>
 				<CardTitle>Symptoms over Time</CardTitle>
-				<CardDescription>January - June 2024</CardDescription>
+				<CardDescription>2025</CardDescription>
 			</CardHeader>
 			<CardContent>
 				<ChartContainer config={chartConfig}>
