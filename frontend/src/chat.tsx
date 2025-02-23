@@ -14,6 +14,7 @@ import {
 } from "firebase/auth";
 import { auth } from "./firebase_config";
 import { ProtectedRoute } from "./protected-route";
+import { NavBar } from "./nav-bar";
 
 interface MessageResponse {
 	content: string;
@@ -133,7 +134,8 @@ export function Chat() {
 
 	return (
 		<ProtectedRoute>
-			<Card className="mx-auto flex h-[600px] w-full max-w-2xl flex-col">
+			<NavBar />
+			<Card className="mx-auto my-4 flex h-[700px] w-full max-w-2xl flex-col">
 				<CardContent className="flex h-full flex-col p-4">
 					<ScrollArea className="flex-1 pr-4">
 						<div className="space-y-4">

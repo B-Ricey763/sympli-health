@@ -3,12 +3,10 @@ import { HandleMessage } from "./handlers/messaging";
 import { authenticateRequest } from "./handlers/auth";
 import * as admin from "firebase-admin";
 import "dotenv/config";
-import * as serviceAccount from "./creds.json";
-console.log(serviceAccount);
 
 export const app = admin.initializeApp({
 	projectId: "sympli-health",
-	credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
+	credential: admin.credential.applicationDefault(),
 });
 export const db = admin.firestore(app);
 
