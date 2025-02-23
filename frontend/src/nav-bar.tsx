@@ -3,10 +3,10 @@ import { Button } from "./components/ui/button";
 
 export function NavBar() {
     const location = useLocation();
-    
-    const getLinkClass = (path: string) => {
-        return location.pathname === path 
-            ? "border-b-2 border-[#7870FF] pb-1" 
+
+    const getLinkClass = (path: string) => { // underlines the current link
+        return location.pathname === path
+            ? "border-b-2 border-[#7870FF] pb-1"
             : "";
     };
 
