@@ -102,7 +102,8 @@ export function Chat() {
 		// Add welcome message when component mounts
 		const welcomeMessage = {
 			id: "welcome",
-			content: "Hi there! 👋 How can I help you today?",
+			content:
+				"Welcome to Sympli 👋! If this is an emergency, please exit the app and call 911. If this is not an emergency please tell me about the symptoms you are experiencing today.",
 			timestamp: new Date().toISOString(),
 			sender: botUser,
 		};
@@ -144,8 +145,10 @@ export function Chat() {
 
 	return (
 		<ProtectedRoute>
-=			<NavBar />
-			<div className="container mx-auto pt-6 pb-6 px-4 text-3xl font-bold font-['PT_Sans_Narrow'] text-center">Chat with Sympli</div>
+			= <NavBar />
+			<div className="container mx-auto px-4 pb-6 pt-6 text-center font-['PT_Sans_Narrow'] text-3xl font-bold">
+				Chat with Sympli
+			</div>
 			<Card className="mx-auto my-4 flex h-[700px] w-full max-w-2xl flex-col shadow-xl shadow-[#7870FF]/50">
 				<CardContent className="flex h-full flex-col p-4">
 					<ScrollArea className="flex-1 pr-4">
@@ -168,11 +171,11 @@ export function Chat() {
 							disabled={isLoading}
 							className="flex-1"
 						/>
-						<Button 
-							type="submit" 
+						<Button
+							type="submit"
 							disabled={isLoading}
-							className="bg-[#7870FF] hover:bg-[#7870FF]/90 shadow-xl shadow-[#7870FF]/60 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-[#7870FF]/70"
-							>
+							className="bg-[#7870FF] shadow-xl shadow-[#7870FF]/60 transition-all duration-300 hover:scale-105 hover:bg-[#7870FF]/90 hover:shadow-2xl hover:shadow-[#7870FF]/70"
+						>
 							{isLoading ? "Sending..." : "Send"}
 						</Button>
 					</form>
