@@ -7,7 +7,8 @@
     "noImplicitAny": false,       // Allow implicit any
     "strictNullChecks": false,    // Don't require null checks
     "strictFunctionTypes": false,
-    "outDir": "dist"
+    "outDir": "dist",
+  "resolveJsonModule": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]

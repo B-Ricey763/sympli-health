@@ -1,8 +1,16 @@
 import { Request, Response } from "@google-cloud/functions-framework";
-import * as dotenv from "dotenv";
 import { HandleMessage } from "./handlers/messaging";
+import { authenticateRequest } from "./handlers/auth";
+import * as admin from "firebase-admin";
+import "dotenv/config";
+import * as serviceAccount from "./creds.json";
+console.log(serviceAccount);
 
-dotenv.config();
+export const app = admin.initializeApp({
+	projectId: "sympli-health",
+	credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
+});
+export const db = admin.firestore(app);
 
 export async function index(req: Request, res: Response) {
 	// CORS handling
@@ -24,6 +32,7 @@ export async function index(req: Request, res: Response) {
 
 		// Auth check for protected routes
 		const user = await authenticateRequest(req);
+		console.log(user.email);
 
 		// Route to appropriate handler
 		const handlers = {
@@ -47,12 +56,8 @@ export async function index(req: Request, res: Response) {
 		res.status(500).json({
 			error:
 				process.env.NODE_ENV === "development"
-					? error.message
+					? JSON.stringify(error)
 					: "Internal server error",
 		});
 	}
-}
-
-function authenticateRequest(req: Request) {
-	return {};
 }
