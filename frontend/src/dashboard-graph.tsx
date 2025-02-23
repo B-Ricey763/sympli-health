@@ -1,6 +1,6 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
+import { LoaderIcon, TrendingUp } from "lucide-react";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 
 import {
@@ -143,7 +143,7 @@ export function SymptomChart({ symptoms }) {
 							Patient Summary
 						</div>
 						<div className="flex items-center gap-2 leading-none text-muted-foreground">
-							{summary === "" ? "Loading summary..." : summary}
+							{summary === "" ? <LoaderIcon className="animate-spin" /> : summary}
 						</div>
 					</div>
 				</div>
