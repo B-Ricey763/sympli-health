@@ -1,25 +1,18 @@
 import { Request, Response } from "@google-cloud/functions-framework";
-// import { DecodedIdToken } from "firebase-admin/auth";
+import { auth } from "firebase-admin";
+import { DecodedIdToken } from "firebase-admin/auth";
 
-type DecodedIdToken = {};
-
-export async function handleUsers(req: Request, res: Response, user: any) {
-	switch (req.method) {
-		case "GET":
-			return getUsers(req, res, user);
-		case "POST":
-			return createUser(req, res, user);
-		default:
-			res.status(405).json({ error: "Method not allowed" });
+export async function authenticateRequest(
+	req: Request,
+): Promise<DecodedIdToken> {
+	const token = req.headers.authorization?.split("Bearer ")[1];
+	if (!token) {
+		throw { code: "UNAUTHENTICATED", message: "No token provided" };
 	}
-}
 
-async function getUsers(req: Request, res: Response, user: DecodedIdToken) {
-	// Implementation
-	res.json({ users: [] });
-}
-
-async function createUser(req: Request, res: Response, user: DecodedIdToken) {
-	// Implementation
-	res.json({ success: true });
+	try {
+		return await auth().verifyIdToken(token);
+	} catch (error) {
+		throw { code: "UNAUTHENTICATED", message: "Invalid token" };
+	}
 }

@@ -1,8 +1,11 @@
 import { Request, Response } from "@google-cloud/functions-framework";
-import * as dotenv from "dotenv";
 import { HandleMessage } from "./handlers/messaging";
+import "dotenv/config";
+import { initializeApp } from "firebase-admin/app";
+import { firestore } from "firebase-admin";
 
-dotenv.config();
+export const app = initializeApp();
+export const db = firestore();
 
 export async function index(req: Request, res: Response) {
 	// CORS handling
@@ -51,8 +54,4 @@ export async function index(req: Request, res: Response) {
 					: "Internal server error",
 		});
 	}
-}
-
-function authenticateRequest(req: Request) {
-	return {};
 }

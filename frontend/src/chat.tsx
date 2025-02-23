@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Bot } from "lucide-react";
+import { redirect } from "react-router";
 
 interface MessageResponse {
 	content: string;
+	is_complete: boolean;
 }
 
 // Dummy user data
@@ -24,9 +26,10 @@ const botUser = {
 };
 
 // Dummy API call
-const sendMessage = async (message) => {
+const sendMessage = async (message, messages) => {
 	// Simulate API delay
 	const url = new URL("send-msg", import.meta.env.VITE_BACKEND_URL);
+	console.log(messages);
 	const res = await fetch(url, {
 		method: "POST",
 		headers: {
@@ -34,6 +37,7 @@ const sendMessage = async (message) => {
 		},
 		body: JSON.stringify({
 			message,
+			chatHistory: messages.join("\n"),
 		}),
 	});
 
@@ -41,7 +45,11 @@ const sendMessage = async (message) => {
 		throw new Error(`HTTP error! status: ${res.status}`);
 	}
 
-	const { content } = (await res.json()) as MessageResponse;
+	const { content, is_complete } = (await res.json()) as MessageResponse;
+	if (is_complete) {
+		//TODO:
+		redirect(`${import.meta.env.VITE_BACKEND_URL}/chat`);
+	}
 
 	return {
 		id: Date.now().toString(),
@@ -99,7 +107,12 @@ export function Chat() {
 		setIsLoading(true);
 
 		try {
-			const response = await sendMessage(inputValue);
+			const response = await sendMessage(
+				inputValue,
+				messages.map(({ id, content, timestamp, sender }) => {
+					return `- ${sender?.name} at ${timestamp}: ${content}`;
+				}),
+			);
 			setMessages((prev) => [...prev, response]);
 		} catch (error) {
 			console.error("Failed to send message:", error);
