@@ -1,5 +1,5 @@
 import { Request, Response } from "@google-cloud/functions-framework";
-import { HandleMessage } from "./handlers/messaging";
+import { HandleMessage, HandleSummarize } from "./handlers/messaging";
 import { authenticateRequest } from "./handlers/auth";
 import * as admin from "firebase-admin";
 import "dotenv/config";
@@ -35,6 +35,7 @@ export async function index(req: Request, res: Response) {
 		// Route to appropriate handler
 		const handlers = {
 			"/send-msg": HandleMessage,
+			"/summarize": HandleSummarize,
 		};
 
 		const handler = handlers[req.path];

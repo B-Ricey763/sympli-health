@@ -56,7 +56,13 @@ const generationConfig: GenerationConfig = {
 		required: ["is_complete", "response", "symptoms"],
 	},
 };
-// 							required: ["name", "onset"]
+const generationConfigAnalyze: GenerationConfig = {
+	temperature: 1,
+	topP: 0.95,
+	topK: 40,
+	maxOutputTokens: 8192,
+	responseMimeType: "text/plain",
+};
 
 interface MessageRequest {
 	message: string;
@@ -89,7 +95,7 @@ export async function HandleMessage(
 	}
 	const saltedPrompt = prompt
 		.replace("{{history}}", JSON.stringify(chatHistory))
-		.replace("{{datetime}}", Date.now().toString());
+		.replace("{{datetime}}", new Date().toISOString());
 
 	const chatSession = model.startChat({
 		generationConfig,
@@ -119,7 +125,49 @@ export async function HandleMessage(
 	});
 }
 
-// TODO: test db stuff
+export async function HandleSummarize(
+	req: Request,
+	res: Response,
+	user: DecodedIdToken,
+) {
+	const docs = await db
+		.collection("user-symptoms")
+		.where("userId", "==", user.uid)
+		.get();
+
+	if (docs.empty) {
+		res.status(404).json({
+			error: "cannot find user document",
+		});
+		return;
+	}
+
+	const doc = docs.docs[0];
+
+	const chatSession = model.startChat({
+		generationConfig: generationConfigAnalyze,
+		history: [
+			{
+				role: "user",
+				parts: [
+					{
+						text: "You are given a symptoms list and tasked with given a succint but high level overview of the symptoms over time. Make sure you use formal language. Don't be granular, detect and report broad sweeping trends. Don't include special formatting, just include plain text",
+					},
+				],
+			},
+		],
+	});
+
+	const currentSymptoms = doc.data().symptoms as SymptomMap;
+	const messageResult = await chatSession.sendMessage(
+		JSON.stringify(currentSymptoms),
+	);
+
+	res.status(200).json({
+		summary: messageResult.response.text(),
+	});
+}
+
 async function writeSymptomsToDb(user: DecodedIdToken, symptoms: Symptom[]) {
 	const docs = await db
 		.collection("user-symptoms")
