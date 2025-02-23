@@ -37,7 +37,6 @@ const botUser = {
 const sendMessage = async (message, messages, idToken: string) => {
 	// Simulate API delay
 	const url = new URL("send-msg", import.meta.env.VITE_BACKEND_URL);
-	console.log(messages);
 	const res = await fetch(url, {
 		method: "POST",
 		headers: {
@@ -98,21 +97,8 @@ export function Chat() {
 	const [messages, setMessages] = useState([]);
 	const [inputValue, setInputValue] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
-	const [user, setUser] = useState<User | null>();
-
-	useEffect(() => {
-		const unsubscribe = onAuthStateChanged(auth, (user) => {
-			setUser(user);
-			setIsLoading(false);
-		});
-
-		return () => unsubscribe();
-	}, []);
 
 	const handleSendMessage = async (e) => {
-		if (!user) {
-			return;
-		}
 		e.preventDefault();
 
 		if (!inputValue.trim() || isLoading) return;
@@ -134,7 +120,7 @@ export function Chat() {
 				messages.map(({ id, content, timestamp, sender }) => {
 					return `- ${sender?.name} at ${timestamp}: ${content}`;
 				}),
-				await user.getIdToken(),
+				await auth.currentUser.getIdToken(),
 			);
 			setMessages((prev) => [...prev, response]);
 		} catch (error) {
