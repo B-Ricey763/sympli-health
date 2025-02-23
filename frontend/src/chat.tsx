@@ -145,7 +145,7 @@ export function Chat() {
 
 	return (
 		<ProtectedRoute>
-			= <NavBar />
+			<NavBar />
 			<div className="container mx-auto px-4 pb-6 pt-6 text-center font-['PT_Sans_Narrow'] text-3xl font-bold">
 				Chat with Sympli
 			</div>

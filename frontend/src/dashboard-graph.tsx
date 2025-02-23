@@ -143,7 +143,11 @@ export function SymptomChart({ symptoms }) {
 							Patient Summary
 						</div>
 						<div className="flex items-center gap-2 leading-none text-muted-foreground">
-							{summary === "" ? <LoaderIcon className="animate-spin" /> : summary}
+							{summary === "" ? (
+								<LoaderIcon className="animate-spin" />
+							) : (
+								summary
+							)}
 						</div>
 					</div>
 				</div>

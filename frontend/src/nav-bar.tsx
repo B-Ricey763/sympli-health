@@ -36,11 +36,11 @@ export function NavBar() {
 	};
 
 	const getUserInitials = (user) => {
-        if (!user) return "";
-        const nameParts = user.displayName?.split(" ") || [];
-        const initials = nameParts.map((part) => part[0]).join("");
-        return initials || user.email[0];
-    };
+		if (!user) return "";
+		const nameParts = user.displayName?.split(" ") || [];
+		const initials = nameParts.map((part) => part[0]).join("");
+		return initials || user.email[0];
+	};
 
 	const onLogout = async () => {
 		try {
@@ -96,17 +96,22 @@ export function NavBar() {
 							<DropdownMenuTrigger asChild>
 								<Button
 									variant="ghost"
-									className="relative h-8 w-8 rounded-full">
-										<Avatar className="h-8 w-8">
-											<AvatarImage src={user?.photoURL || ""} alt={user?.displayName || "User"} />
-											<AvatarFallback>{getUserInitials(user)}</AvatarFallback>
-										</Avatar>
+									className="relative h-8 w-8 rounded-full"
+								>
+									<Avatar className="h-8 w-8">
+										<AvatarImage
+											src={user?.photoURL || ""}
+											alt={user?.displayName || "User"}
+										/>
+										<AvatarFallback>{getUserInitials(user)}</AvatarFallback>
+									</Avatar>
 								</Button>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent align="end">
-								<DropdownMenuItem 
+								<DropdownMenuItem
 									onClick={onLogout}
-									className="hover:bg-[#7870FF]/10 focus:bg-[#7870FF]/10">
+									className="hover:bg-[#7870FF]/10 focus:bg-[#7870FF]/10"
+								>
 									<LogOut className="mr-2 h-4 w-4" />
 									<span>Log out</span>
 								</DropdownMenuItem>
@@ -114,7 +119,9 @@ export function NavBar() {
 						</DropdownMenu>
 					) : (
 						<Link to="/login">
-							<Button className="bg-[#7870FF] hover:bg-[#7870FF]/90 shadow-xl shadow-[#7870FF]/60 text-xl px-12 py-6 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-[#7870FF]/70">Login</Button>
+							<Button className="rounded-xl bg-[#7870FF] px-12 py-6 text-xl shadow-xl shadow-[#7870FF]/60 transition-all duration-300 hover:scale-105 hover:bg-[#7870FF]/90 hover:shadow-2xl hover:shadow-[#7870FF]/70">
+								Login
+							</Button>
 						</Link>
 					)}
 				</div>
@@ -129,12 +136,7 @@ export function NavBar() {
 					</SheetTrigger>
 					<SheetContent side="right" className="w-[300px] sm:w-[400px]">
 						<div className="mt-8 flex flex-col space-y-4">
-							<NavLinks
-								className="flex flex-col space-y-4"
-								onClick={() =>
-									document.querySelector('[role="dialog"]')?.close()
-								}
-							/>
+							<NavLinks className="flex flex-col space-y-4" />
 							{isLoggedIn ? (
 								<Button
 									variant="destructive"
@@ -148,7 +150,10 @@ export function NavBar() {
 								</Button>
 							) : (
 								<Link to="/login">
-									<Button className="bg-[#7870FF] hover:bg-[#7870FF]/90 shadow-xl shadow-[#7870FF]/60 text-xl px-12 py-6 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-[#7870FF]/70 w-full" variant="default">
+									<Button
+										className="w-full rounded-xl bg-[#7870FF] px-12 py-6 text-xl shadow-xl shadow-[#7870FF]/60 transition-all duration-300 hover:scale-105 hover:bg-[#7870FF]/90 hover:shadow-2xl hover:shadow-[#7870FF]/70"
+										variant="default"
+									>
 										Login
 									</Button>
 								</Link>
