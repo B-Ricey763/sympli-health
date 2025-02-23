@@ -1,15 +1,51 @@
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { Button } from "./components/ui/button";
 
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { LogOut, Menu } from "lucide-react";
+import { auth } from "./firebase_config";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "./components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
 
 export function NavBar() {
 	const location = useLocation();
+	const isLoggedIn = auth.currentUser !== null;
+	const navigate = useNavigate();
+	const [user, setUser] = useState(null);
+
+	useEffect(() => {
+		// 2. Set up the subscription
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			setUser(user); // Will be null if logged out, user object if logged in
+		});
+
+		// 3. Cleanup subscription on unmount
+		return () => unsubscribe();
+	}, []);
 
 	const getLinkClass = (path: string) => {
 		// underlines the current link
 		return location.pathname === path ? "border-b-2 border-[#7870FF] pb-1" : "";
+	};
+
+	const onLogout = async () => {
+		try {
+			await auth.signOut();
+			navigate("/login");
+			console.log("User successfully logged out");
+			// You can add additional cleanup here if needed
+			// For example: clear local storage, reset state, redirect user
+		} catch (error) {
+			console.error("Error logging out:", error.message);
+			throw error; // Re-throw to handle in the component
+		}
 	};
 
 	const NavLinks = ({ className = "", onClick = () => {} }) => (
@@ -46,10 +82,33 @@ export function NavBar() {
 				<NavLinks className="hidden space-x-10 md:flex" />
 
 				{/* Desktop Login Button */}
-				<div className="hidden md:block">
-					<Link to="/login">
-						<Button variant="default">Login</Button>
-					</Link>
+				<div className="hidden items-center space-x-4 md:flex">
+					{/* Show either Login button or Avatar based on auth state */}
+					{isLoggedIn ? (
+						<DropdownMenu>
+							<DropdownMenuTrigger asChild>
+								<Button
+									variant="ghost"
+									className="relative h-8 w-8 rounded-full"
+								>
+									<Avatar className="h-8 w-8">
+										<AvatarImage src="/placeholder-avatar.jpg" alt="User" />
+										<AvatarFallback>U</AvatarFallback>
+									</Avatar>
+								</Button>
+							</DropdownMenuTrigger>
+							<DropdownMenuContent align="end">
+								<DropdownMenuItem onClick={onLogout}>
+									<LogOut className="mr-2 h-4 w-4" />
+									<span>Log out</span>
+								</DropdownMenuItem>
+							</DropdownMenuContent>
+						</DropdownMenu>
+					) : (
+						<Link to="/login">
+							<Button variant="default">Login</Button>
+						</Link>
+					)}
 				</div>
 
 				{/* Mobile Menu */}
@@ -68,16 +127,24 @@ export function NavBar() {
 									document.querySelector('[role="dialog"]')?.close()
 								}
 							/>
-							<Link
-								to="/login"
-								onClick={() =>
-									document.querySelector('[role="dialog"]')?.close()
-								}
-							>
-								<Button className="w-full" variant="default">
-									Login
+							{isLoggedIn ? (
+								<Button
+									variant="destructive"
+									className="w-full"
+									onClick={() => {
+										onLogout();
+									}}
+								>
+									<LogOut className="mr-2 h-4 w-4" />
+									Log out
 								</Button>
-							</Link>
+							) : (
+								<Link to="/login">
+									<Button className="w-full" variant="default">
+										Login
+									</Button>
+								</Link>
+							)}
 						</div>
 					</SheetContent>
 				</Sheet>

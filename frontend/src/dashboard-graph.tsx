@@ -17,6 +17,8 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/components/ui/chart";
+import { useEffect, useState } from "react";
+import { auth } from "./firebase_config";
 
 // ================================
 
@@ -61,6 +63,8 @@ function extractDates(symptoms: { [key: string]: string[] }) {
 }
 
 export function SymptomChart({ symptoms }) {
+	const [summary, setSummary] = useState("");
+
 	const chartConfig: ChartConfig = Object.fromEntries(
 		Object.keys(symptoms).map((symptom, index) => [
 			symptom,
@@ -70,10 +74,31 @@ export function SymptomChart({ symptoms }) {
 			},
 		]),
 	);
+
+	useEffect(() => {
+		const fetchSummary = async () => {
+			const url = new URL("summarize", import.meta.env.VITE_BACKEND_URL);
+			const idToken = await auth.currentUser.getIdToken();
+			const res = await fetch(url, {
+				method: "GET",
+				headers: {
+					Authorization: `Bearer ${idToken}`,
+				},
+			});
+			if (res.ok) {
+				const json = await res.json();
+				setSummary(json.summary);
+			} else {
+				setSummary("Reload for summary (or there was an error)");
+			}
+		};
+
+		fetchSummary();
+	}, []);
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>Line Chart - Multiple</CardTitle>
+				<CardTitle>Symptoms over Time</CardTitle>
 				<CardDescription>January - June 2024</CardDescription>
 			</CardHeader>
 			<CardContent>
@@ -115,10 +140,10 @@ export function SymptomChart({ symptoms }) {
 				<div className="flex w-full items-start gap-2 text-sm">
 					<div className="grid gap-2">
 						<div className="flex items-center gap-2 font-medium leading-none">
-							Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+							Patient Summary
 						</div>
 						<div className="flex items-center gap-2 leading-none text-muted-foreground">
-							Showing total visitors for the last 6 months
+							{summary === "" ? "Loading summary..." : summary}
 						</div>
 					</div>
 				</div>
