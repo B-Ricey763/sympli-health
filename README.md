@@ -1,5 +1,6 @@
+
 # Sympli
-_Created in 1.5 days for Hackylitics 2025_
+**3RD PLACE WINNER FOR GENERATIVE AI TRACK FOR HACKYLITICS 2025 and created in 36 hours**
 
 ## Description
 Sympli is a web platform reshaping symptom reporting and chronic disease management by collecting real-time data, using Gemini 2.0 prompts, and generating visual reports to enhance patient care.
