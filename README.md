@@ -1,13 +1,14 @@
 
 # Sympli
-**3RD PLACE WINNER FOR GENERATIVE AI TRACK FOR HACKYLITICS 2025 and created in 36 hours**
+**🥉 3RD PLACE WINNER FOR GENERATIVE AI TRACK FOR HACKYLITICS 2025 🌍 AND CREATED IN 36 HOURS ⌛**
+
 
 ## Description
 Sympli is a web platform reshaping symptom reporting and chronic disease management by collecting real-time data, using Gemini 2.0 prompts, and generating visual reports to enhance patient care.
 
-See the [devpost here](https://devpost.com/software/sympli). 
-
-Also, watch the [YouTube Demo Video](https://youtu.be/N_uCOOGWHF4). 
+- [Try it out yourself!](https://sympli-health.web.app/landing)
+- [Read the Devpost Submission](https://devpost.com/software/sympli)
+- [Watch the YouTube Demo Video](https://youtu.be/N_uCOOGWHF4)
 
 
 ## Quickstart
