@@ -23,9 +23,23 @@ Once your Firebase and GCP project are properly configured, you need to run `gcl
 Now, you should be able to run `npm run dev` to run both the dev frontend and backend. Visit localhost and see your project!
 
 ## Tech Stack
-- Firebase for google auth, firestore, and frontend hosting
-- Google Cloud Run Functions for backend endpoints
-- Gemini 2.0 Flash for chatbot functionality
-- Frontend: React + shadcn/ui + tailwindcss, and React Router
-- Backend: Typescript + NodeJS 
-
+- Frontend:
+  - React + TypeScript for building the UI components
+  - shadcn/ui for pre-built accessible components
+  - Tailwind CSS for styling and responsive design
+  - Recharts for data visualization and interactive charts
+  - React Router for client-side routing
+  - Lucide React for modern icon components
+- Backend:
+  - TypeScript + NodeJS for type-safe server implementation
+  - Google Cloud Run Functions for serverless backend endpoints
+  - Firebase services:
+    - Authentication for Google sign-in
+    - Firestore for real-time data storage
+    - Hosting for frontend deployment
+- AI/ML:
+  - Gemini 2.0 Flash for intelligent chatbot functionality
+  - Natural language processing for symptom analysis
+- Development:
+  - Vite for fast development and building
+  - Environment variable management for secure configuration
